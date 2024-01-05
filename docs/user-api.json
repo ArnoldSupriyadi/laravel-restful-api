@@ -1,0 +1,98 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "User API",
+        "description": "User API",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http//localhost:8000"
+        }
+    ],
+    "paths": {
+        "/api/users": {
+            "post": {
+                "description": "Regiser New user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "example": {
+                                "Khannedy": {
+                                    "description": "Register user Khannedy",
+                                    "value": {
+                                        "username": "khannedy",
+                                        "password": "rahasia",
+                                        "name": "Eko Kurniawan Khannedy"
+                                    }
+                                }
+                            },
+                            "schema": {
+                                "type": "object",
+                                "required": ["name", "password", "username"],
+                                "properties": {
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "response": {
+                    "201": {
+                        "description": "Success register user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number"
+                                                },
+                                                "username": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "api/users/login": {
+                "description": "Login User"
+            },
+            "api/users/current": {
+                "get": {
+                    "description": "Get current user"
+                },
+                "patch": {
+                    "description": "Update current user"
+                }
+            },
+            "api/users/logout": {
+                "delete": {
+                    "description": "Logout current user"
+                }
+            }
+        }
+    }
+}
