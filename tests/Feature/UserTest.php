@@ -10,9 +10,6 @@ use Tests\TestCase;
 
 class UserTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
     public function testRegisterSuccess()
     {
         $this->post('/api/users', [
@@ -105,7 +102,7 @@ class UserTest extends TestCase
         $this->seed([UserSeeder::class]);
         $this->post('/api/users/login', [
             'username' => 'test',
-            'password' => 'salah',
+            'password' => 'salah'
         ])->assertStatus(401)
             ->assertJson([
                 'errors' => [
@@ -116,7 +113,7 @@ class UserTest extends TestCase
             ]);
     }
 
-        public function testGetSuccess()
+    public function testGetSuccess()
     {
         $this->seed([UserSeeder::class]);
 
@@ -164,7 +161,7 @@ class UserTest extends TestCase
 
     }
 
-        public function testUpdatePasswordSuccess()
+    public function testUpdatePasswordSuccess()
     {
         $this->seed([UserSeeder::class]);
         $oldUser = User::where('username', 'test')->first();
@@ -232,4 +229,38 @@ class UserTest extends TestCase
                 ]
             ]);
     }
+
+    public function testLogoutSuccess()
+    {
+        $this->seed([UserSeeder::class]);
+
+        $this->delete(uri: '/api/users/logout', headers: [
+            'Authorization' => 'test'
+        ])->assertStatus(200)
+            ->assertJson([
+                "data" => true
+            ]);
+
+        $user = User::where('username', 'test')->first();
+        self::assertNull($user->token);
+
+    }
+
+    public function testLogoutFailed()
+    {
+        $this->seed([UserSeeder::class]);
+
+        $this->delete(uri: '/api/users/logout', headers: [
+            'Authorization' => 'salah'
+        ])->assertStatus(401)
+            ->assertJson([
+                "errors" => [
+                    "message" => [
+                        "unauthorized"
+                    ]
+                ]
+            ]);
+    }
+
+
 }
