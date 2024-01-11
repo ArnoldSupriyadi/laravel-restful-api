@@ -11,7 +11,7 @@ class Contact extends Model
 {
     protected $primaryKey = "id";
     protected $keyType = "int";
-    protected $table = "contact";
+    protected $table = "contacts";
     public $incrementing = true;
     public $timestamps = true;
 
@@ -22,7 +22,8 @@ class Contact extends Model
         'phone'
     ];
 
-    public function user(): BelongsTo {
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(Contact::class, "user_id", "id");
     }
 
@@ -30,5 +31,4 @@ class Contact extends Model
     {
         return $this->hasMany(Address::class, "contact_id", "id");
     }
-    
 }

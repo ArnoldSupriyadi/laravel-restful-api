@@ -13,8 +13,8 @@ class Address extends Model
     protected $keyType = "int";
     public $incrementing = true;
     public $timestamps = true;
-    
-     protected $fillable = [
+
+    protected $fillable = [
         'street',
         'city',
         'province',
